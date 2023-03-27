@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,12 +52,6 @@ public class Alquileres implements IAlquileres {
 			}
 		}
 		return alqVehiculo;
-	}
-
-	// devolverá la cantidad de elementos que contiene la lista
-	@Override
-	public int getCantidad() {
-		return coleccionAlquileres.size();
 	}
 
 	// comprobará que en la lista no existe ningún alquiler sin devolver ni para el

@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,6 @@ public class Clientes implements IClientes {
 	public List<Cliente> get() {
 		return new ArrayList<>(coleccionClientes);
 		// Devuelve un list pero en verdad de vuelve un ArrayList
-	}
-
-	// devolverá la cantidad de elementos que contiene la lista.
-	@Override
-	public int getCantidad() {
-		return coleccionClientes.size();
 	}
 
 	// añadirá un cliente a la lista si éste no es nulo y no existe aún en la lista.

@@ -23,9 +23,6 @@ public interface IAlquileres {
 	// dicho turismo (no debe crear nuevas instancias).
 	List<Alquiler> get(Vehiculo vehiculo);
 
-	// devolverá la cantidad de elementos que contiene la lista
-	int getCantidad();
-
 	void devolver(Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException;
 
 	// añadirá un alquiler a la lista si éste no es nulo y pasa la comprobación

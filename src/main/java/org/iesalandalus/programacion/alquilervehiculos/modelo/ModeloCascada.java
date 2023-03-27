@@ -1,28 +1,22 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public class ModeloCascada extends Modelo {
-	public ModeloCascada(IFuenteDatos fuenteDatos) {
-		super();
-		this.fuenteDatos = fuenteDatos;
 
+	// Haz que el constructor de Modelo sea el que realice la asignación de la
+	// fuente de datos y que desde ModeloCascada se llame a este constructor.
+	public ModeloCascada(FactoriaFuenteDatos factoriaFuenteDatos) {
+		super(factoriaFuenteDatos);
 	}
 
 	// creará la instancia de las clases de negocio anteriores

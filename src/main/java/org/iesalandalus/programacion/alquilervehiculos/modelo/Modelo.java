@@ -1,13 +1,13 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
@@ -21,6 +21,13 @@ public abstract class Modelo {
 	protected IAlquileres alquileres;
 	protected IVehiculos vehiculos;
 	protected IFuenteDatos fuenteDatos;
+	protected FactoriaFuenteDatos factoriaFuenteDatos;
+
+	// Haz que el constructor de Modelo sea el que realice la asignación de la
+	// fuente de datos y que desde ModeloCascada se llame a este constructor.
+	protected Modelo(FactoriaFuenteDatos factoriaFuenteDatos) {
+		setFuenteDatos(factoriaFuenteDatos.crear());
+	}
 
 	protected IClientes getClientes() {
 		return clientes;

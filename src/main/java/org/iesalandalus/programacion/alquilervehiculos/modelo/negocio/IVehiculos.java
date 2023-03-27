@@ -12,9 +12,6 @@ public interface IVehiculos {
 	// instancias).
 	List<Vehiculo> get();
 
-	// devolverá la cantidad de elementos que contiene la lista
-	int getCantidad();
-
 	// añadirá un turismo a la lista si éste no es nulo y no existe aún en la lista.
 	void insertar(Vehiculo vehiculo) throws OperationNotSupportedException;
 

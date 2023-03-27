@@ -12,9 +12,6 @@ public interface IClientes {
 	// instancias)
 	List<Cliente> get();
 
-	// devolverá la cantidad de elementos que contiene la lista.
-	int getCantidad();
-
 	// añadirá un cliente a la lista si éste no es nulo y no existe aún en la lista.
 	void insertar(Cliente cliente) throws OperationNotSupportedException;
 

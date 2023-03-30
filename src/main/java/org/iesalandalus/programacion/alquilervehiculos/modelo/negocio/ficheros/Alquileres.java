@@ -1,6 +1,8 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
+import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,15 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
 
 public class Alquileres implements IAlquileres {
+	
+	private static final File FICHERO_ALQUILERES = new File("datos/alquileres.xml");
+	private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final String RAIZ = "alquileres";
+    private static final String CLIENTE = "cliente";
+    private static final String VEHICULO = "vehiculo";
+    private static final String FECHA_ALQUILER = "fecha alquiler";
+    private static final String FECHA_DEVOLUCION = "fecha devolucion";
+	
 	private List<Alquiler> coleccionAlquileres;
 
 	// creará la lista

@@ -1,22 +1,137 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
+import java.io.DataInputStream;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
+import javax.xml.parsers.DocumentBuilder;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
+import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Accion;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Clientes implements IClientes {
 	Cliente cliente;
+
+	private static final File FICHERO_CLIENTES = new File(String.format("datos%sclientes.xml", File.separator));
+	private static final String RAIZ = "clientes";
+	private static final String CLIENTE = "cliente";
+	private static final String NOMBRE = "nombre";
+	private static final String DNI = "dni";
+	private static final String TELEFONO = "telefono";
+	private static Clientes instancia;
 
 	private List<Cliente> coleccionClientes;
 
 	public Clientes() {
 		coleccionClientes = new ArrayList<>();
 	}
+	// al comenzar lea el fichero XML de clientes, lo almacene en un una lista y al
+	// terminar lo vuelva a almacenar en dicho fichero. El fichero debe estar
+	// situado en la carpeta datos de la raíz del proyecto y se debe llamar
+	// clientes.xml
 
+	// Mira si la isntancia es nula, si es nula le asigna un new de la clase y
+	// finalmente vuelve la instanica, si no es nula la devuelve
+	static Clientes getInstancia() {
+		if (instancia == null) {
+			instancia = new Clientes();
+		}
+		return instancia;
+
+	}
+
+	public void comenzar() throws OperationNotSupportedException {
+		// Llamar a la clase de utlidades y lea un xml, eso te devuelve un documento que
+		// se lo pasas a leer dom
+		Document documento = UtilidadesXml.leerXmlDeFichero(FICHERO_CLIENTES);
+
+		if (documento == null) {
+			System.out.println("No se puede leer un documento nulo");
+		} else {
+			leerDom(documento);
+			System.out.println("El documento se ha leído correctamente");
+		}
+
+	}
+
+	private void leerDom(Document documentoXml) throws OperationNotSupportedException {
+
+		// Genera el documento, procesarlo/recorrerlo para quedarse con todos los
+		// elementos con la etiqueta cliente y añadir un nuevo cliente a la lista
+		// Voy recorriendo el documento y si lee cliente, lo guardo en la lista y uso
+		// getCliente
+		NodeList clientesNode = documentoXml.getElementsByTagName(CLIENTE);
+		for (int i = 0; i < clientesNode.getLength(); i++) {
+			Node nClientes = clientesNode.item(i);
+			if (nClientes.getNodeType() == Node.ELEMENT_NODE) {
+				// Le hago un casting al nodo para que sea elemento porque getCliente recibe
+				// elementos
+				// Falta añadir a la lista, hacerlo con insertar y hacer try catch "Error al
+				// procesar el cliente"
+				try {
+					insertar(getCliente((Element) nClientes));
+				} catch (OperationNotSupportedException e) {
+					System.out.println("Error al procesar el cliente número " + i + " ---> " + e.getMessage());
+				}
+			}
+		}
+
+	}
+
+	private Cliente getCliente(Element elemento) {
+		// elemento.getatribute y el atributo
+		// le paso un elemento que he leido del dom y le digo que me lo pase aun cliente
+		// para añadiro a la lista
+		String nombre = elemento.getAttribute(NOMBRE);
+		String dni = elemento.getAttribute(DNI);
+		String telefono = elemento.getAttribute(TELEFONO);
+		return new Cliente(nombre, dni, telefono);
+	}
+
+	public void terminar() {
+		// Llama a crear dom, eso te da un documento y llama a escribirFicjero xml
+		Document documento = crearDom();
+		UtilidadesXml.escribirXmlAFichero(documento, FICHERO_CLIENTES);
+
+	}
+
+	public Document crearDom() {
+		DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+		Document documentoXml = null;
+		if (constructor != null) {
+			documentoXml = constructor.newDocument();
+			documentoXml.appendChild(documentoXml.createElement(RAIZ));
+			for (Cliente cliente1 : getInstancia().get()) {
+				Element elementoCliente = getElemento(documentoXml, cliente1);
+				documentoXml.getDocumentElement().appendChild(elementoCliente);
+			}
+		}
+		return documentoXml;
+	}
+
+	public Element getElemento(Document documentoXml, Cliente cliente) {
+		// Crea un elemento del tipo cliente y le va añadiendo los atributos y lo
+		// devuelve
+		Element elementoCliente = documentoXml.createElement(CLIENTE);
+
+		elementoCliente.setAttribute(NOMBRE, cliente.getNombre());
+		elementoCliente.setAttribute(DNI, cliente.getDni());
+		elementoCliente.setAttribute(TELEFONO, cliente.getTelefono());
+
+		return elementoCliente;
+	}
+
+	// A PARTIR DE AQUÍ EMPIEZA LA PARTE DE LA V1
 	// devolverá una nueva lista con los mismos elementos (no debe crear nuevas
 	// instancias)
 	@Override

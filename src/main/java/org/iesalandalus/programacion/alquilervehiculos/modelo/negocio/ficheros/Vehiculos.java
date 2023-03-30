@@ -1,5 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,19 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public class Vehiculos implements IVehiculos {
+	private static final File FICHERO_VEHICULOS = new File("datos/vehiculos.xml");
+	private static final String RAIZ = "vehiculos";
+	private static final String VEHICULO = "vehiculo";
+	private static final String MARCA = "marca";
+	private static final String MODELO = "modelo";
+	private static final String MATRICULA = "matricula";
+	private static final String CILINDRADA = "cilindrada";
+	private static final String PLAZAS = "plazas";
+	private static final String PMA = "pma";
+	private static final String TIPO = "tipo";
+	private static final String TURISMO = "turismo";
+	private static final String AUTOBUS = "autobus";
+	private static final String FURGONETA = "furgoneta";
 
 	private List<Vehiculo> coleccionVehiculos;
 

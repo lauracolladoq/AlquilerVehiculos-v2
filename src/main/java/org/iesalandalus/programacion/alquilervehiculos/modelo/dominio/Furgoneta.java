@@ -2,8 +2,8 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public class Furgoneta extends Vehiculo {
 
-	private static int FACTOR_PMA = 100;
-	private static int FACTOR_PLAZAS = 1;
+	private static final int FACTOR_PMA = 100;
+	private static final int FACTOR_PLAZAS = 1;
 	private int pma;
 	private int plazas;
 
@@ -41,6 +41,7 @@ public class Furgoneta extends Vehiculo {
 		this.plazas = plazas;
 	}
 
+	@Override
 	protected int getFactorPrecio() {
 		return pma / FACTOR_PMA + plazas * FACTOR_PLAZAS;
 	}

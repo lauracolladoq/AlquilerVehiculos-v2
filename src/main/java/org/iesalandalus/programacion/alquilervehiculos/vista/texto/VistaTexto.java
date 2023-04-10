@@ -39,8 +39,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Insertar cliente");
 			getControlador().insertar(Consola.leerCliente());
-			String mensaje = "Cliente insertado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nCliente insertado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -50,8 +49,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Insertar vehiculo");
 			getControlador().insertar(Consola.leerVehiculo());
-			String mensaje = "Vehiculo insertado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nVehiculo insertado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -61,8 +59,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Insertar alquiler");
 			getControlador().insertar(Consola.leerAlquiler());
-			String mensaje = "Alquiler insertado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nAlquiler insertado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -72,8 +69,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Buscar cliente");
 			System.out.println(getControlador().buscar(Consola.leerClienteDni()));
-			String mensaje = "Cliente buscado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nCliente buscado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -83,8 +79,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Buscar vehiculo");
 			System.out.println(getControlador().buscar(Consola.leerVehiculoMatricula()));
-			String mensaje = "Vehiculo buscado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nBuscar vehiculo%n%n");
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -95,8 +90,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Buscar alquiler");
 			System.out.println(getControlador().buscar(Consola.leerAlquiler()));
-			String mensaje = "Alquiler buscado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nAlquiler buscado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -106,8 +100,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Modificar cliente");
 			getControlador().modificar(Consola.leerClienteDni(), Consola.leerNombre(), Consola.leerTelefono());
-			String mensaje = "Cliente modificado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nCliente modificado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -117,8 +110,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Devolver alquiler del cliente");
 			getControlador().devolver(Consola.leerClienteDni(), Consola.leerFechaDevolucion());
-			String mensaje = "Alquiler devuelto correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nAlquiler devuelto correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -128,8 +120,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Devolver alquiler del vehiculo");
 			getControlador().devolver(Consola.leerVehiculoMatricula(), Consola.leerFechaDevolucion());
-			String mensaje = "Alquiler devuelto correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nAlquiler devuelto correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -139,8 +130,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Borrar cliente");
 			getControlador().borrar(Consola.leerClienteDni());
-			String mensaje = "Cliente borrado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nCliente borrado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -150,8 +140,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Borrar vehiculo");
 			getControlador().borrar(Consola.leerVehiculoMatricula());
-			String mensaje = "Vehiculo borrado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nVehiculo borrado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -162,8 +151,7 @@ public class VistaTexto extends Vista {
 		try {
 			Consola.mostrarCabecera("Borrar alquiler");
 			getControlador().borrar(Consola.leerAlquiler());
-			String mensaje = "Alquiler borrado correctamente";
-			System.out.printf("%n%s%n%n", mensaje);
+			System.out.printf("%nAlquiler borrado correctamente%n%n");
 		} catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
 		}
@@ -285,11 +273,13 @@ public class VistaTexto extends Vista {
 		// Modificar to string de tipovehiculo si quiero cambiar como imprime el mapa
 
 		Map<TipoVehiculo, Integer> estadisticas = new EnumMap<>(TipoVehiculo.class);
-		estadisticas.put(TipoVehiculo.AUTOBUS, 0);
-		estadisticas.put(TipoVehiculo.FURGONETA, 0);
-		estadisticas.put(TipoVehiculo.TURISMO, 0);
+
+		for (TipoVehiculo tipoVehiculo : TipoVehiculo.values()) {
+			estadisticas.put(tipoVehiculo, 0);
+		}
 
 		return estadisticas;
 
 	}
+
 }

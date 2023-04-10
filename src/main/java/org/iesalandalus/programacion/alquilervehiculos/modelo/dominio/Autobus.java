@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public class Autobus extends Vehiculo {
-	private static int FACTOR_PLAZAS = 2;
+	private static final int FACTOR_PLAZAS = 2;
 	private int plazas;
 
 	public Autobus(String marca, String modelo, int plazas, String matricula) {

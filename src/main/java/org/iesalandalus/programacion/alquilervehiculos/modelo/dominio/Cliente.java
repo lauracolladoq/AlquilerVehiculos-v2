@@ -7,8 +7,6 @@ public class Cliente {
 	private static final String ER_NOMBRE = "[A-Z][a-z]*( [A-Z][a-z]*)?";
 	private static final String ER_DNI = "\\d{8}[A-Z]";
 	private static final String ER_TELEFONO = "\\d{9}$";
-	private static final char[] LETRAS_DNI = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J',
-			'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E' };
 
 	private String nombre;
 	private String dni;
@@ -70,6 +68,8 @@ public class Cliente {
 	private boolean comprobarLetraDni(String dni) {
 		Character letraDni = dni.charAt(8);
 		int numDni = Integer.parseInt(dni.substring(0, 8)) % 23;
+		char[] LETRAS_DNI = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V',
+				'H', 'L', 'C', 'K', 'E' };
 		Character letraObtenida = LETRAS_DNI[numDni];
 		return letraDni.equals(letraObtenida);
 	}

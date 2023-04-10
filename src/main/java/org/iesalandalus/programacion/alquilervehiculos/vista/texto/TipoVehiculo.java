@@ -34,11 +34,9 @@ public enum TipoVehiculo {
 		TipoVehiculo tipoVehiculo = null;
 		if (vehiculo instanceof Autobus) {
 			tipoVehiculo = TipoVehiculo.AUTOBUS;
-		}
-		if (vehiculo instanceof Furgoneta) {
+		} else if (vehiculo instanceof Furgoneta) {
 			tipoVehiculo = TipoVehiculo.FURGONETA;
-		}
-		if (vehiculo instanceof Turismo) {
+		} else if (vehiculo instanceof Turismo) {
 			tipoVehiculo = TipoVehiculo.TURISMO;
 		}
 

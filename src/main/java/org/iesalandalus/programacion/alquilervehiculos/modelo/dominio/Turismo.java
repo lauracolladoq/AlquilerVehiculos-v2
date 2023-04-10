@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public class Turismo extends Vehiculo {
-	private static int FACTOR_CILINDRADA = 10;
+	private static final int FACTOR_CILINDRADA = 10;
 	private int cilindrada;
 
 	public Turismo(String marca, String modelo, int cilindrada, String matricula) {
@@ -29,13 +29,9 @@ public class Turismo extends Vehiculo {
 	// Crea el método de clase que se indica en el diagrama, que dada una matrícula
 	// correcta nos devuelva un turismo válido con dicha matrícula y que será
 	// utilizado en las futuras búsquedas.
-	public static Turismo getTurismoConMatricula(String matricula) {
-		return new Turismo("Seat", "León", 90, matricula);
-
-	}
 
 	// Un turismo será igual a otro si su matrícula es la misma
-
+	@Override
 	protected int getFactorPrecio() {
 		return cilindrada / FACTOR_CILINDRADA;
 	}

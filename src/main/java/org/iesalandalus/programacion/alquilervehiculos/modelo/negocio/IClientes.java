@@ -10,6 +10,10 @@ public interface IClientes {
 
 	// devolverá una nueva lista con los mismos elementos (no debe crear nuevas
 	// instancias)
+	void comenzar();
+
+	void terminar();
+
 	List<Cliente> get();
 
 	// añadirá un cliente a la lista si éste no es nulo y no existe aún en la lista.

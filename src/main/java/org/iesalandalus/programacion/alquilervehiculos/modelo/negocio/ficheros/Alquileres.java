@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 import java.io.File;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,28 +9,119 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
+import javax.xml.parsers.DocumentBuilder;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Alquileres implements IAlquileres {
-	
-	private static final File FICHERO_ALQUILERES = new File("datos/alquileres.xml");
+
+	private static final File FICHERO_ALQUILERES = new File(String.format("datos%salquileres.xml", File.separator));
 	private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private static final String RAIZ = "alquileres";
-    private static final String CLIENTE = "cliente";
-    private static final String VEHICULO = "vehiculo";
-    private static final String FECHA_ALQUILER = "fecha alquiler";
-    private static final String FECHA_DEVOLUCION = "fecha devolucion";
-	
+	private static final String ALQUILER = "alquiler";
+	private static final String CLIENTE = "cliente";
+	private static final String VEHICULO = "vehiculo";
+	private static final String FECHA_ALQUILER = "fecha alquiler";
+	private static final String FECHA_DEVOLUCION = "fecha devolucion";
+	private static Alquileres instancia;
+	Cliente cliente;
+	Vehiculo vehiculo;
+
 	private List<Alquiler> coleccionAlquileres;
 
 	// creará la lista
 	public Alquileres() {
 		coleccionAlquileres = new ArrayList<>();
 	}
+
+	static Alquileres getInstancia() {
+		if (instancia == null) {
+			instancia = new Alquileres();
+		}
+		return instancia;
+
+	}
+
+	public void comenzar() {
+		Document documento = UtilidadesXml.leerXmlDeFichero(FICHERO_ALQUILERES);
+
+		if (documento == null) {
+			System.out.println("No se puede leer un documento nulo");
+		} else {
+			leerDom(documento);
+			System.out.println("El documento se ha leído correctamente");
+		}
+
+	}
+
+	private void leerDom(Document documentoXml) {
+		NodeList alquileresNode = documentoXml.getElementsByTagName(ALQUILER);
+		for (int i = 0; i < alquileresNode.getLength(); i++) {
+			Node nAlquileres = alquileresNode.item(i);
+			if (nAlquileres.getNodeType() == Node.ELEMENT_NODE) {
+				try {
+					insertar(getAlquiler((Element) nAlquileres));
+				} catch (OperationNotSupportedException | NullPointerException | IllegalArgumentException e) {
+					System.out.println("Error al procesar el alquiler número " + i + " ---> " + e.getMessage());
+				}
+			}
+		}
+
+	}
+
+	private Alquiler getAlquiler(Element elemento) {
+		String dni = elemento.getAttribute(CLIENTE);
+		if ()
+		// Si el buscar es null, lanzo excepcion, estoy leyendo un DNI
+		Vehiculo vehiculo = elemento.getAttribute(VEHICULO);
+		LocalDate fechaAlquiler = elemento.getAttribute(FECHA_ALQUILER);
+		return new Alquiler(cliente, vehiculo, fechaAlquiler);
+	}
+
+	public void terminar() {
+		Document documento = crearDom();
+		UtilidadesXml.escribirXmlAFichero(documento, FICHERO_ALQUILERES);
+
+	}
+
+	public Document crearDom() {
+		DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+		Document documentoXml = null;
+		if (constructor != null) {
+			documentoXml = constructor.newDocument();
+			documentoXml.appendChild(documentoXml.createElement(RAIZ));
+			for (Alquiler alquiler1 : getInstancia().get()) {
+				Element elementoAlquiler = getElemento(documentoXml, alquiler1);
+				documentoXml.getDocumentElement().appendChild(elementoAlquiler);
+			}
+		}
+		return documentoXml;
+	}
+
+	public Element getElemento(Document documentoXml, Alquiler alquiler) {
+		Element elementoAlquiler = documentoXml.createElement(ALQUILER);
+		elementoAlquiler.setAttribute(CLIENTE, String.format("%s", Cliente.getClienteConDni(cliente.getDni())));
+		elementoAlquiler.setAttribute(VEHICULO,
+				String.format("%s", Vehiculo.getVehiculoConMatricula(vehiculo.getMatricula())));
+		elementoAlquiler.setAttribute(FECHA_ALQUILER, FORMATO_FECHA.format(alquiler.getFechaAlquiler()));
+
+		if (alquiler.getFechaDevolucion() == null) {
+			System.out.println("La fecha de devolución es nula");
+		} else {
+			elementoAlquiler.setAttribute(FECHA_DEVOLUCION, FORMATO_FECHA.format(alquiler.getFechaDevolucion()));
+		}
+
+		return elementoAlquiler;
+	}
+
+	// AQUÍ COMIENZA LA V1
 
 	// devolverá una nueva lista con los mismos elementos (no debe crear nuevas
 	// instancias)
@@ -191,11 +283,11 @@ public class Alquileres implements IAlquileres {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede borrar un alquiler nulo.");
 		}
-		if (buscar(alquiler) != alquiler) {
+		Alquiler alquilerAux = buscar(alquiler);
+		if (alquilerAux != alquiler) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
 		}
-		int alquilerAux = coleccionAlquileres.indexOf(alquiler);
-		if (alquilerAux != -1) {
+		if (alquilerAux == null) {
 			coleccionAlquileres.remove((alquilerAux));
 		}
 

@@ -7,7 +7,9 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public interface IVehiculos {
+	void comenzar();
 
+	void terminar();
 	// devolverá una nueva lista con los mismos elementos (no debe crear nuevas
 	// instancias).
 	List<Vehiculo> get();

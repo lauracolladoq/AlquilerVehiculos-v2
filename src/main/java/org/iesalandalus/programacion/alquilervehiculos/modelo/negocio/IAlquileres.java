@@ -10,7 +10,9 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public interface IAlquileres {
+	void comenzar();
 
+	void terminar();
 	// devolverá una nueva lista con los mismos elementos (no debe crear nuevas
 	// instancias)
 	List<Alquiler> get();

@@ -134,7 +134,7 @@ public class Consola {
 		// Me recorro los valores de TipoVehiculo y los muestro segun el to string de
 		// TipoVehiculo
 		for (TipoVehiculo tipo : TipoVehiculo.values()) {
-			String mensaje = tipo.ordinal()+". " + tipo;
+			String mensaje = tipo.ordinal() + ". " + tipo;
 			System.out.println(mensaje);
 		}
 	}
@@ -143,8 +143,16 @@ public class Consola {
 	private static TipoVehiculo elegirTipoVehiculo() {
 		// Pido al usuaro un num y según ese num saco el tipo de vehículo con el get de
 		// TipoVehiculo
-		int num = leerEntero("Introduce el número del tipo de vehiculo: ");
-		return TipoVehiculo.get(num);
+		TipoVehiculo tipoVehiculo = null;
+		do {
+			try {
+				int num = leerEntero("Selecciona una opción: ");
+				tipoVehiculo = TipoVehiculo.get(num);
+			} catch (NullPointerException e) {
+				System.out.println(e.getMessage());
+			}
+		} while (tipoVehiculo == null);
+		return tipoVehiculo;
 	}
 
 	// me pasan un tipo de vehiculo, si este es igual a autobus por ejemplo, creo un

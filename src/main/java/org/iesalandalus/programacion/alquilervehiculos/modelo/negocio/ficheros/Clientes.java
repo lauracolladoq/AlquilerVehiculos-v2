@@ -1,10 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
-import java.io.DataInputStream;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +9,12 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
-import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Accion;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Clientes implements IClientes {
-	Cliente cliente;
 
 	private static final File FICHERO_CLIENTES = new File(String.format("datos%sclientes.xml", File.separator));
 	private static final String RAIZ = "clientes";
@@ -50,7 +44,7 @@ public class Clientes implements IClientes {
 
 	}
 
-	public void comenzar() throws OperationNotSupportedException {
+	public void comenzar() {
 		// Llamar a la clase de utlidades y lea un xml, eso te devuelve un documento que
 		// se lo pasas a leer dom
 		Document documento = UtilidadesXml.leerXmlDeFichero(FICHERO_CLIENTES);
@@ -64,7 +58,7 @@ public class Clientes implements IClientes {
 
 	}
 
-	private void leerDom(Document documentoXml) throws OperationNotSupportedException {
+	private void leerDom(Document documentoXml) {
 
 		// Genera el documento, procesarlo/recorrerlo para quedarse con todos los
 		// elementos con la etiqueta cliente y añadir un nuevo cliente a la lista
@@ -80,7 +74,7 @@ public class Clientes implements IClientes {
 				// procesar el cliente"
 				try {
 					insertar(getCliente((Element) nClientes));
-				} catch (OperationNotSupportedException e) {
+				} catch (OperationNotSupportedException | NullPointerException | IllegalArgumentException e) {
 					System.out.println("Error al procesar el cliente número " + i + " ---> " + e.getMessage());
 				}
 			}
@@ -188,15 +182,15 @@ public class Clientes implements IClientes {
 	// nulos ni blancos) de un cliente existente y si no lanzará la correspondiente
 	// excepción.
 	@Override
-
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
 		}
-		if (coleccionClientes.indexOf(cliente) == -1) {
+		Cliente clienteBuscado = buscar(cliente);
+		if (clienteBuscado == null) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		} else {
-			Cliente clienteBuscado = buscar(cliente);
+
 			// Si el nombre no es nulo ni blanco, me deja cambiar el nombre
 			if (nombre != null && !nombre.isBlank()) {
 				clienteBuscado.setNombre(nombre);

@@ -262,9 +262,9 @@ public class VistaTexto extends Vista {
 				// Para no hacer TipoVehiculo. y el vehiculo lo hago con el .get(vehiculo)
 				estadisticas.put(TipoVehiculo.get(vehiculo), estadisticas.get(TipoVehiculo.get(vehiculo)) + 1);
 			}
-			System.out.println(estadisticas);
 
 		}
+		System.out.println(estadisticas);
 
 	}
 

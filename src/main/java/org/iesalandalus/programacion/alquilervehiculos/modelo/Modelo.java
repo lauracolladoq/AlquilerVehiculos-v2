@@ -62,6 +62,9 @@ public abstract class Modelo {
 	}
 
 	public void terminar() {
+		clientes.terminar();
+		alquileres.terminar();
+		vehiculos.terminar();
 		System.out.println("El modelo ha terminado");
 	}
 

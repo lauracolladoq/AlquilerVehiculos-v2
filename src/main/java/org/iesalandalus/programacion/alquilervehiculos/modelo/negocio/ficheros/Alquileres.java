@@ -79,17 +79,14 @@ public class Alquileres implements IAlquileres {
 		String fechaAlq = elemento.getAttribute(FECHA_ALQUILER);
 		String fechaDev = null;
 
-		if (elemento.hasAttribute(FECHA_DEVOLUCION)) {
-			fechaDev = elemento.getAttribute(FECHA_DEVOLUCION);
-		}
-
-		Cliente cliente = Cliente.getClienteConDni(dni);
-		Vehiculo vehiculo = Vehiculo.getVehiculoConMatricula(matricula);
+		Cliente cliente = Clientes.getInstancia().buscar(Cliente.getClienteConDni(dni));
+		Vehiculo vehiculo = Vehiculos.getInstancia().buscar(Vehiculo.getVehiculoConMatricula(matricula));
 		LocalDate fechaAlquiler = LocalDate.parse(fechaAlq, FORMATO_FECHA);
 
 		Alquiler alquiler = new Alquiler(cliente, vehiculo, fechaAlquiler);
 
-		if (fechaDev != null) {
+		if (elemento.hasAttribute(FECHA_DEVOLUCION)) {
+			fechaDev = elemento.getAttribute(FECHA_DEVOLUCION);
 			LocalDate fechaDevolucion = LocalDate.parse(fechaDev, FORMATO_FECHA);
 			alquiler.devolver(fechaDevolucion);
 		}

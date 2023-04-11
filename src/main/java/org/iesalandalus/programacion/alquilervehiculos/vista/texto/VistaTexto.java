@@ -31,6 +31,7 @@ public class VistaTexto extends Vista {
 
 	// mostrará un mensaje de despedida por consola
 	public void terminar() {
+		getControlador().terminar();
 		System.out.printf("%nHasta luego Lucas!");
 	}
 
@@ -247,8 +248,14 @@ public class VistaTexto extends Vista {
 		// me pregunta cuantos tipos de vehiculos se alquilan ese mes
 
 		// Hacer if con mismo mes y año porque pueden ser de otros años
-		Consola.mostrarCabecera("Introduce un mes para mostrar sus estadísticas: ");
-		LocalDate mes = Consola.leerMes();
+		LocalDate mes;
+
+		// CORREGIR: Al poner la fecha mal no te la vuelve a pedir
+		do {
+			Consola.mostrarCabecera("Introduce un mes para mostrar sus estadísticas: ");
+			mes = Consola.leerMes();
+		} while (mes == null);
+		
 		Map<TipoVehiculo, Integer> estadisticas = inicializarEstadisticas();
 		for (Alquiler alquileres : getControlador().getAlquileres()) {
 			if ((alquileres.getFechaAlquiler().getMonth().equals(mes.getMonth()))

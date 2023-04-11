@@ -9,12 +9,10 @@ import javax.naming.OperationNotSupportedException;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
-import org.iesalandalus.programacion.alquilervehiculos.vista.texto.TipoVehiculo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -131,13 +129,15 @@ public class Vehiculos implements IVehiculos {
 
 		if (vehiculo instanceof Autobus autobus) {
 			elementoVehiculo.setAttribute(PLAZAS, String.format("%d", autobus.getPlazas()));
+			elementoVehiculo.setAttribute(TIPO, AUTOBUS);
 		}
 		if (vehiculo instanceof Turismo turismo) {
 			elementoVehiculo.setAttribute(CILINDRADA, String.format("%d", turismo.getCilindrada()));
+			elementoVehiculo.setAttribute(TIPO, TURISMO);
 		}
 		if (vehiculo instanceof Furgoneta furgoneta) {
 			elementoVehiculo.setAttribute(PLAZAS, String.format("%d", furgoneta.getPlazas()));
-
+			elementoVehiculo.setAttribute(TIPO, FURGONETA);
 			elementoVehiculo.setAttribute(PMA, String.format("%d", furgoneta.getPma()));
 
 		}

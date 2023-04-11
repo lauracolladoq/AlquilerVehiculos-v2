@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.controlador;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
@@ -8,7 +9,6 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
@@ -29,7 +29,7 @@ public class Controlador {
 		}
 		this.modelo = modelo;
 		this.vista = vista;
-		
+
 		vista.setControlador(this);
 	}
 
@@ -42,7 +42,7 @@ public class Controlador {
 
 	public void terminar() {
 		modelo.terminar();
-		vista.terminar();
+		//vista.terminar();
 	}
 
 	// Crea los demás métodos que simplemente harán una llamada al correspondiente

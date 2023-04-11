@@ -56,8 +56,8 @@ public abstract class Modelo {
 
 	public void comenzar() {
 		clientes.comenzar();
-		alquileres.comenzar();
 		vehiculos.comenzar();
+		alquileres.comenzar();
 
 	}
 

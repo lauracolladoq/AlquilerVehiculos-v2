@@ -31,8 +31,7 @@ public class VistaTexto extends Vista {
 
 	// mostrará un mensaje de despedida por consola
 	public void terminar() {
-		String mensaje = "Hasta luego Lucas!";
-		System.out.printf("%n%s", mensaje);
+		System.out.printf("%nHasta luego Lucas!");
 	}
 
 	public void insertarCliente() {

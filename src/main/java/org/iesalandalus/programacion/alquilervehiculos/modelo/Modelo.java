@@ -27,6 +27,9 @@ public abstract class Modelo {
 	// fuente de datos y que desde ModeloCascada se llame a este constructor.
 	protected Modelo(FactoriaFuenteDatos factoriaFuenteDatos) {
 		setFuenteDatos(factoriaFuenteDatos.crear());
+		clientes = fuenteDatos.crearClientes();
+		alquileres = fuenteDatos.crearAlquileres();
+		vehiculos = fuenteDatos.crearVehiculos();
 	}
 
 	protected IClientes getClientes() {
@@ -52,9 +55,9 @@ public abstract class Modelo {
 	}
 
 	public void comenzar() {
-		clientes = fuenteDatos.crearClientes();
-		alquileres = fuenteDatos.crearAlquileres();
-		vehiculos = fuenteDatos.crearVehiculos();
+		clientes.comenzar();
+		alquileres.comenzar();
+		vehiculos.comenzar();
 
 	}
 

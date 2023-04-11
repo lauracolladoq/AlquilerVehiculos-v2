@@ -1,7 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 import java.io.File;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,11 +27,9 @@ public class Alquileres implements IAlquileres {
 	private static final String ALQUILER = "alquiler";
 	private static final String CLIENTE = "cliente";
 	private static final String VEHICULO = "vehiculo";
-	private static final String FECHA_ALQUILER = "fecha alquiler";
-	private static final String FECHA_DEVOLUCION = "fecha devolucion";
+	private static final String FECHA_ALQUILER = "fechaAlquiler";
+	private static final String FECHA_DEVOLUCION = "fechaDevolucion";
 	private static Alquileres instancia;
-	Cliente cliente;
-	Vehiculo vehiculo;
 
 	private List<Alquiler> coleccionAlquileres;
 
@@ -76,13 +73,29 @@ public class Alquileres implements IAlquileres {
 
 	}
 
-	private Alquiler getAlquiler(Element elemento) {
+	private Alquiler getAlquiler(Element elemento) throws OperationNotSupportedException {
 		String dni = elemento.getAttribute(CLIENTE);
-		if ()
-		// Si el buscar es null, lanzo excepcion, estoy leyendo un DNI
-		Vehiculo vehiculo = elemento.getAttribute(VEHICULO);
-		LocalDate fechaAlquiler = elemento.getAttribute(FECHA_ALQUILER);
-		return new Alquiler(cliente, vehiculo, fechaAlquiler);
+		String matricula = elemento.getAttribute(VEHICULO);
+		String fechaAlq = elemento.getAttribute(FECHA_ALQUILER);
+		String fechaDev = null;
+
+		if (elemento.hasAttribute(FECHA_DEVOLUCION)) {
+			fechaDev = elemento.getAttribute(FECHA_DEVOLUCION);
+		}
+
+		Cliente cliente = Cliente.getClienteConDni(dni);
+		Vehiculo vehiculo = Vehiculo.getVehiculoConMatricula(matricula);
+		LocalDate fechaAlquiler = LocalDate.parse(fechaAlq, FORMATO_FECHA);
+
+		Alquiler alquiler = new Alquiler(cliente, vehiculo, fechaAlquiler);
+
+		if (fechaDev != null) {
+			LocalDate fechaDevolucion = LocalDate.parse(fechaDev, FORMATO_FECHA);
+			alquiler.devolver(fechaDevolucion);
+		}
+
+		return alquiler;
+
 	}
 
 	public void terminar() {
@@ -107,9 +120,8 @@ public class Alquileres implements IAlquileres {
 
 	public Element getElemento(Document documentoXml, Alquiler alquiler) {
 		Element elementoAlquiler = documentoXml.createElement(ALQUILER);
-		elementoAlquiler.setAttribute(CLIENTE, String.format("%s", Cliente.getClienteConDni(cliente.getDni())));
-		elementoAlquiler.setAttribute(VEHICULO,
-				String.format("%s", Vehiculo.getVehiculoConMatricula(vehiculo.getMatricula())));
+		elementoAlquiler.setAttribute(CLIENTE, String.format("%s", alquiler.getCliente().getDni()));
+		elementoAlquiler.setAttribute(VEHICULO, String.format("%s", alquiler.getVehiculo().getMatricula()));
 		elementoAlquiler.setAttribute(FECHA_ALQUILER, FORMATO_FECHA.format(alquiler.getFechaAlquiler()));
 
 		if (alquiler.getFechaDevolucion() == null) {
@@ -169,7 +181,7 @@ public class Alquileres implements IAlquileres {
 				throw new OperationNotSupportedException("ERROR: El cliente tiene otro alquiler sin devolver.");
 			}
 			if (alquiler.getVehiculo().equals(vehiculo) && alquiler.getFechaDevolucion() == null) {
-				throw new OperationNotSupportedException("ERROR: El vehiculo está actualmente alquilado.");
+				throw new OperationNotSupportedException("ERROR: El vehículo está actualmente alquilado.");
 			}
 			if (alquiler.getCliente().equals(cliente) && alquiler.getFechaDevolucion() != null
 					&& (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
@@ -182,7 +194,7 @@ public class Alquileres implements IAlquileres {
 					&& (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
 							|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler))) {
 
-				throw new OperationNotSupportedException("ERROR: El vehiculo tiene un alquiler posterior.");
+				throw new OperationNotSupportedException("ERROR: El vehículo tiene un alquiler posterior.");
 
 			}
 		}
@@ -287,7 +299,7 @@ public class Alquileres implements IAlquileres {
 		if (alquilerAux != alquiler) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
 		}
-		if (alquilerAux == null) {
+		if (alquilerAux != null) {
 			coleccionAlquileres.remove((alquilerAux));
 		}
 
